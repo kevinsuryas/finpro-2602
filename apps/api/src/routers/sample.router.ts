@@ -1,23 +1,8 @@
-import { SampleController } from '@/controllers/sample.controller';
-import { Router } from 'express';
+import express, { Router } from "express";
+import * as SampleController from "../controllers/sample.controller"
 
-export class SampleRouter {
-  private router: Router;
-  private sampleController: SampleController;
+const router: Router = express.Router()
 
-  constructor() {
-    this.sampleController = new SampleController();
-    this.router = Router();
-    this.initializeRoutes();
-  }
+router.get("/", SampleController.sample)
 
-  private initializeRoutes(): void {
-    this.router.get('/', this.sampleController.getSampleData);
-    this.router.get('/:id', this.sampleController.getSampleDataById);
-    this.router.post('/', this.sampleController.createSampleData);
-  }
-
-  getRouter(): Router {
-    return this.router;
-  }
-}
+export default router
