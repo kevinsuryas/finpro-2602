@@ -1,13 +1,13 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import cors from "cors"
 import router from "./routers/index.router";
+import { createTransactionMidtrans } from "./libs/midtrans"
 
 const app: Express = express()
 const port: number = 8000
 
 app.use(express.json())
 app.use(cors())
-
 app.use(router)
 
 app.get("/api/user", (_, res: Response) => {
@@ -18,6 +18,15 @@ app.get("/api/user", (_, res: Response) => {
       { id: 1, name: "Immanuel" },
       { id: 2, name: "Joshua" }
     ]
+  })
+})
+
+app.post("/api/midtrans", async (_, res: Response) => {
+  const snap = await createTransactionMidtrans()
+  res.send({
+    success: "true",
+    message: "create midtrans transaction success",
+    data: snap
   })
 })
 
