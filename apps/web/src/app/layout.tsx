@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth"
 import "./globals.css"
 
 import { TanstackProvider } from '@/providers/tanstackProvider';
-import Header from '@/components/cores/Header';
+import Navbar from '@/components/cores/Navbar';
 import Footer from '@/components/cores/Footer';
 import ReduxProvider from '@/providers/ReduxProvider';
 import SessionProvider from '@/components/cores/SessionProvider';
@@ -28,9 +28,9 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <ReduxProvider>
             <TanstackProvider>
-              <Header />
+              {/* <Navbar /> */}
               {children}
-              <Footer />
+              {/* <Footer /> */}
             </TanstackProvider>
           </ReduxProvider>
         </SessionProvider>

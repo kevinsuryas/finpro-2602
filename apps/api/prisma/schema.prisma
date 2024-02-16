@@ -10,12 +10,191 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Order_Status {
+  id            String          @unique @default(uuid())
+  name          String
+  Order_History Order_History[]
+}
 
-  @@map("samples") // if you want to use snake_case format
+model Order_History {
+  id Int @id @default(autoincrement())
+
+  order_status    Order_Status @relation(fields: [order_status_id], references: [id])
+  order_status_id String
+
+  time_done DateTime @db.DateTime()
+  Order     Order[]
+}
+
+model Detail_Complaint {
+  id          Int      @id @default(autoincrement())
+  description String   @db.MediumText
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  Order       Order[]
+}
+
+model Outlet {
+  id                  String                @id @default(uuid())
+  name                String                @db.VarChar(50)
+  address             String                @db.VarChar(50)
+  phone_number        String                @db.VarChar(14)
+  longitude           String                @db.VarChar(10)
+  latitude            String                @db.VarChar(9)
+  active              Int                   @db.TinyInt()
+  created_at          DateTime              @default(now())
+  updated_at          DateTime              @updatedAt
+  Outlet_Worker       Outlet_Worker[]
+  Driver              Driver[]
+  Order               Order[]
+  Outlet_Worker_Shift Outlet_Worker_Shift[]
+}
+
+model Outlet_Worker_Shift {
+  id String @id @default(uuid())
+
+  outlet    Outlet @relation(fields: [outlet_id], references: [id])
+  outlet_id String
+
+  name          String
+  time_start    DateTime        @db.Time()
+  time_end      DateTime        @db.Time()
+  Outlet_Worker Outlet_Worker[]
+}
+
+model Outlet_Worker {
+  id String @id @default(uuid())
+
+  outlet    Outlet @relation(fields: [outlet_id], references: [id])
+  outlet_id String
+
+  name         String  @db.VarChar(50)
+  address      String  @db.VarChar(50)
+  phone_number String? @db.VarChar(14)
+
+  type Outlet_Worker_Type
+
+  shift    Outlet_Worker_Shift @relation(fields: [shift_id], references: [id])
+  shift_id String
+
+  active     Int      @db.TinyInt()
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+enum Outlet_Worker_Type {
+  admin
+  ironing
+  washing
+  packing
+}
+
+model Super_Admin {
+  id           String   @id @default(uuid())
+  name         String   @db.VarChar(50)
+  address      String   @db.VarChar(50)
+  phone_number String   @db.VarChar(14)
+  username     String   @db.VarChar(50)
+  password     String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+}
+
+model Driver {
+  id String @id @default(uuid())
+
+  outlet    Outlet @relation(fields: [outlet_id], references: [id])
+  outlet_id String
+
+  name            String   @db.VarChar(50)
+  address         String   @db.VarChar(50)
+  phone_number    String   @db.VarChar(14)
+  longitude       String   @db.VarChar(10)
+  latitude        String   @db.VarChar(9)
+  active          Int      @db.TinyInt()
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+  driver_pickup   Order[]  @relation("driver_pickup")
+  driver_delivery Order[]  @relation("driver_delivery")
+}
+
+model Category_Detail_Order {
+  id           String         @id @default(uuid())
+  item_name    String         @db.VarChar(50)
+  Detail_Order Detail_Order[]
+}
+
+model Detail_Order {
+  id String @id @default(uuid())
+
+  order    Order  @relation(fields: [order_id], references: [id])
+  order_id String
+
+  category_detail_order    Category_Detail_Order @relation(fields: [category_detail_order_id], references: [id])
+  category_detail_order_id String
+
+  item_qty String @db.VarChar(5)
+}
+
+model Customer {
+  id               String             @id @default(uuid())
+  name             String             @db.VarChar(50)
+  phone_number     String             @db.VarChar(14)
+  email            String?            @unique @db.VarChar(50)
+  password         String?
+  longitude        String             @db.VarChar(10)
+  latitude         String             @db.VarChar(9)
+  active           Int                @db.TinyInt()
+  verified         Int                @db.TinyInt()
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+  Customer_Address Customer_Address[]
+  Order            Order[]
+}
+
+model Customer_Address {
+  id String @id @default(uuid())
+
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id String
+
+  recipient_name    String   @db.VarChar(50)
+  recipient_address String   @db.VarChar(50)
+  longitude         String   @db.VarChar(10)
+  latitude          String   @db.VarChar(9)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+}
+
+model Order {
+  id String @id @default(uuid())
+
+  outlet    Outlet @relation(fields: [outlet_id], references: [id])
+  outlet_id String
+
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id String
+
+  customer_address String
+
+  driver_pickup    Driver @relation(fields: [driver_pickup_id], references: [id], name: "driver_pickup")
+  driver_pickup_id String
+
+  driver_delivery    Driver? @relation(fields: [driver_delivery_id], references: [id], name: "driver_delivery")
+  driver_delivery_id String?
+
+  order_history    Order_History? @relation(fields: [order_history_id], references: [id])
+  order_history_id Int?
+
+  complaint    Detail_Complaint? @relation(fields: [complaint_id], references: [id])
+  complaint_id Int?
+
+  weight        Float?         @db.Float()
+  laundry_price Int?           @db.Int
+  pickup_fee    Int            @db.Int
+  delivery_fee  Int            @db.Int
+  active        Int            @db.TinyInt()
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  Detail_Order  Detail_Order[]
 }
