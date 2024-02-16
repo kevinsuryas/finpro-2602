@@ -8,12 +8,12 @@
     "build": "tsc",
     "serve": "cross-env NODE_ENV=production node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prisma": "npx prisma"
+    "prisma": "npx prisma",
+    "prismaDev": "npx prisma migrate dev"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.7.1",
     "@types/bcrypt": "^5.0.2",
     "@types/handlebars": "^4.1.0",
     "@types/jsonwebtoken": "^9.0.5",
@@ -36,9 +36,10 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
+    "@prisma/client": "^5.8.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "prisma": "^5.7.1",
+    "prisma": "^5.8.1",
     "tsconfig-paths": "^4.2.0"
   }
 }

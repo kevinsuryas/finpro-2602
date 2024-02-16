@@ -5,10 +5,12 @@ import { setUser } from "@/stores/slice/userSlice";
 import { axiosInstance } from "@/utils/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
   const { data, isLoading, isError } = fetchUseQuery("user", "/user")
+  const [location, setLocation] = useState()
   const dataUser: any = useSelector((state: any) => state.user)
   const dispatch = useDispatch()
 
@@ -16,6 +18,15 @@ export default function Home() {
     dispatch(setUser({
       username, password
     }))
+  }
+
+  const binderbyte = async () => {
+    try {
+      const res = await axios.get(`https://api.binderbyte.com/wilayah/provinsi?api_key=${process.env.BINDERBYTE_API_KEY}`)
+      setLocation(res.data.value)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const fetchMidtrans = useQuery({
@@ -35,14 +46,15 @@ export default function Home() {
       document.head.appendChild(script);
     };
 
-    loadMidtransScript();
+    binderbyte()
+    loadMidtransScript()
   }, []);
-
 
   if (isLoading) return (<p>Loading...</p>)
   if (isError) return (<p>Something Error, Please Refresh...</p>)
   return (
     <div>
+      <p>{JSON.stringify(location)}</p>
       <p>{JSON.stringify(data)}</p>
       <p>{JSON.stringify(dataUser.user)}</p>
       <button onClick={() => setDispatch("onClick Username", "onClick password")}>Change Redux</button>

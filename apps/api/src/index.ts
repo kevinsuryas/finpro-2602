@@ -2,9 +2,11 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import cors from "cors"
 import router from "./routers/index.router";
 import { createTransactionMidtrans } from "./libs/midtrans"
+import dotenv from "dotenv"
 
 const app: Express = express()
 const port: number = 8000
+dotenv.config()
 
 app.use(express.json())
 app.use(cors())

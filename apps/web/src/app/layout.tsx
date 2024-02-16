@@ -28,9 +28,9 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <ReduxProvider>
             <TanstackProvider>
-              <Navbar />
+              {/* <Navbar /> */}
               {children}
-              <Footer />
+              {/* <Footer /> */}
             </TanstackProvider>
           </ReduxProvider>
         </SessionProvider>
