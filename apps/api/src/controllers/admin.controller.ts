@@ -1,23 +1,33 @@
-import { hashPassword } from '@/libs/bcrypt';
+import { comparePassword, hashPassword } from '@/libs/bcrypt';
+import { jwtCreate } from '@/libs/jwt';
 import prisma from '@/prisma';
 import { NextFunction, Request, Response } from 'express';
-import { validationResult } from 'express-validator';
 
 export const loginAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const errors = validationResult(req)
+    const { username, password } = req.body
+    const superAdmin: any = await prisma.super_Admin.findFirst({
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        password: true
+      },
+      where: {
+        username
+      }
+    })
 
-    if (errors.isEmpty()) {
-      console.log(req.body)
+    const isPasswordCorret = await comparePassword(password, superAdmin?.password)
 
-    } else {
-      res.status(422).send({
-        error: true,
-        message: errors
-      })
-    }
+    if (!isPasswordCorret) throw ({ error: false, message: "Username or Password not match", status: 401 })
+    res.status(200).send({
+      success: true,
+      message: "Login Success",
+      data: await jwtCreate({ id: superAdmin?.id, role: "super_admin", email: superAdmin?.username })
+    })
 
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 }

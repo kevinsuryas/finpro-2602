@@ -16,7 +16,7 @@ export const transporterMailer = nodemailer.createTransport({
 
 export const verifyAccount = async (email: string) => {
 
-    const verifyToken = await jwtCreate({ id: "testid", role: "customer" })
+    const verifyToken = await jwtCreate({ id: "testid", role: "customer", email })
     const template = fs.readFileSync("./VerifyEmailTemplate.html", "utf-8")
     let compiledTemplate: any = await Handlebars.compile(template)
     compiledTemplate = compiledTemplate({ email: "testid@gmail.com", verifyToken })

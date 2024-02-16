@@ -2,11 +2,12 @@ import jsonwebtoken from "jsonwebtoken"
 
 interface IJWT {
     id: string,
-    role: string
+    role: string,
+    email: string
 }
 
-export const jwtCreate = async ({ id, role }: IJWT) => {
-    return jsonwebtoken.sign({ id, role }, "finpro-260202", {
+export const jwtCreate = async ({ id, role, email }: IJWT) => {
+    return jsonwebtoken.sign({ id, role, email }, "finpro-260202", {
         expiresIn: "3h"
     })
 }
