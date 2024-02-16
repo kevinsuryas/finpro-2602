@@ -10,7 +10,7 @@ import ReduxProvider from '@/providers/ReduxProvider';
 import SessionProvider from '@/components/cores/SessionProvider';
 import { Gelasio } from 'next/font/google';
 
-const inter = Gelasio({ subsets: ['latin'], weight: ['400'] });
+const inter = Inter({ subsets: ['latin']});
 
 export const metadata: Metadata = {
   title: 'Final Project JCWD-260202',
@@ -24,7 +24,7 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession()
   return (
-    <html lang="en">
+    <html className='scroll-smooth'lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
           <ReduxProvider>

@@ -46,11 +46,11 @@ export default function Location () {
 
     return(
         <>
-        <div className="text-4xl font-bold text-center mt-20 mb-20">
+        <div id="location" className="text-4xl font-bold text-center mt-20 mb-10">
              Our Location
         </div>
 
-            <div className="breadcrumbs">
+            <div className="breadcrumbs max-w-[1240px] mx-auto">
                 <div className="flex items-center justify-center gap-5 mb-20 mt-5 bread">
                         <ul>
                     <div className="flex gap-5 gap-5 carousel carousel-end max-w  ">
@@ -65,7 +65,7 @@ export default function Location () {
                                                     <p>Address: {item.address}</p>
                                                     <p>Phone: {item.phone}</p>
                                                     <div className="card-actions justify-end">
-                                                    <button className="btn btn-primary">Buy Now</button>
+                                                    <button className="btn btn-primary font-bold text-white">Description</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,9 +76,6 @@ export default function Location () {
                                     </ul> 
                 </div>
             </div>
-<div>
-    hshdsdhdhs
-</div>
             
 
 

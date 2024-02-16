@@ -43,7 +43,7 @@ export default function Hero () {
     }
     return(
         <>
-        <div className="max-w-[1440px] h-[780px] w-full m-auto py-16 px-4 relative group">
+        <div className="max-w-[1340px] h-[580px] w-full m-auto py-8 px-4 mb-10 relative group">
             <div style={{backgroundImage: `url(${slides[currentIndex].url})`}}className="w-full h-full rounded-2xl bg-center bg-cover duration-500">
                 {/* Left Arrow */}
                 <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
@@ -53,15 +53,14 @@ export default function Hero () {
                 <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
                     <BsChevronCompactRight size={30} onClick={nextslide}/>
                 </div>
-                <div className="flex justify-center py-2 absolute bottom-5 text-center w-full ">
+                {/* <div className="flex justify-center py-2 absolute bottom-5 text-center w-full ">
                     {slides.map((slide, slideIndex) => (
                         <div key={slideIndex} onClick={() => goToSlide(slideIndex)} className="text-2xl cursor-pointer">
                             <RxDotFilled/>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
-        </div>
        </>
     )
 }
