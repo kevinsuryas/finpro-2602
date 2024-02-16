@@ -8,8 +8,9 @@ import Navbar from '@/components/cores/Navbar';
 import Footer from '@/components/cores/Footer';
 import ReduxProvider from '@/providers/ReduxProvider';
 import SessionProvider from '@/components/cores/SessionProvider';
+import { Gelasio } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Gelasio({ subsets: ['latin'], weight: ['400'] });
 
 export const metadata: Metadata = {
   title: 'Final Project JCWD-260202',
@@ -28,9 +29,9 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <ReduxProvider>
             <TanstackProvider>
-              {/* <Navbar /> */}
+              <Navbar />
               {children}
-              {/* <Footer /> */}
+              <Footer />
             </TanstackProvider>
           </ReduxProvider>
         </SessionProvider>
