@@ -8,6 +8,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import Hero from '@/components/landingPage/Hero'
+import Location from '@/components/landingPage/Location'
+import Request from '@/components/landingPage/Request'
+import Contact from "@/components/landingPage/Contact";
+import Image from "next/image";
+
 export default function Home() {
   const { data, isLoading, isError } = fetchUseQuery("user", "/user")
   const [location, setLocation] = useState()
@@ -53,13 +59,11 @@ export default function Home() {
   if (isLoading) return (<p>Loading...</p>)
   if (isError) return (<p>Something Error, Please Refresh...</p>)
   return (
-    <div>
-      <p>{JSON.stringify(location)}</p>
-      <p>{JSON.stringify(data)}</p>
-      <p>{JSON.stringify(dataUser.user)}</p>
-      <button onClick={() => setDispatch("onClick Username", "onClick password")}>Change Redux</button>
-      <br />
-      <button id="pay-button" className="bg-blue-950 text-white" onClick={() => snap.pay(fetchMidtrans?.data?.data?.token)}>Test Midtrans</button>
-    </div>
+  <>
+      <Hero/>
+      <Request/>
+      <Location/>
+      <Contact/>
+  </>
   )
 }

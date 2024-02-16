@@ -8,8 +8,9 @@ import Navbar from '@/components/cores/Navbar';
 import Footer from '@/components/cores/Footer';
 import ReduxProvider from '@/providers/ReduxProvider';
 import SessionProvider from '@/components/cores/SessionProvider';
+import { Gelasio } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin']});
 
 export const metadata: Metadata = {
   title: 'Final Project JCWD-260202',
@@ -23,14 +24,14 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession()
   return (
-    <html lang="en">
+    <html className='scroll-smooth'lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
           <ReduxProvider>
             <TanstackProvider>
-              {/* <Navbar /> */}
+              <Navbar />
               {children}
-              {/* <Footer /> */}
+              <Footer />
             </TanstackProvider>
           </ReduxProvider>
         </SessionProvider>

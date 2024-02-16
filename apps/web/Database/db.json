@@ -1,0 +1,103 @@
+{
+    "location": [
+        {
+            "id":1,
+            "name":"Jinbe Wash Jakarta",
+            "address": "Jalan Kol 5 no.26 Jakarta",
+            "phone": "081234567890",
+            "image": "/loc1.jpeg"
+        },
+        {
+            "id":2,
+            "name":"Jinbe Wash Jakarta",
+            "address": "Jalan Sawi 2 no.17 BSD",
+            "phone": "0845589641",
+            "image": "/loc2.jpg"
+        },
+        {
+            "id":3,
+            "name":"Jinbe Wash Bogor",
+            "address": "Jalan Mangga 3 no.15 Bogor",
+            "phone": "01848354858",
+            "image": "/loc3.jpeg"
+        },
+        {
+            "id":4,
+            "name":"Jinbe Wash Pamulang",
+            "address": "Jalan Jeruk 4 no.5 Pamulang",
+            "phone": "018485455455",
+            "image": "/loc4.jpeg"
+        },
+        {
+            "id":3,
+            "name":"MJinbe Wash Bandung",
+            "address": "Jalan Manggis 5 no.25 Bandung",
+            "phone": "08454554858",
+            "image": "/loc5.jpg"
+        },
+        {
+            "id":1,
+            "name":"Jinbe Wash Jakarta",
+            "address": "Jalan Kol 5 no.26 Jakarta",
+            "phone": "081234567890",
+            "image": "/loc1.jpeg"
+        },
+        {
+            "id":2,
+            "name":"Jinbe Wash Jakarta",
+            "address": "Jalan Sawi 2 no.17 BSD",
+            "phone": "0845589641",
+            "image": "/loc2.jpg"
+        },
+        {
+            "id":3,
+            "name":"Jinbe Wash Bogor",
+            "address": "Jalan Mangga 3 no.15 Bogor",
+            "phone": "01848354858",
+            "image": "/loc3.jpeg"
+        },
+        {
+            "id":4,
+            "name":"Jinbe Wash Pamulang",
+            "address": "Jalan Jeruk 4 no.5 Pamulang",
+            "phone": "018485455455",
+            "image": "/loc4.jpeg"
+        },
+        {
+            "id":3,
+            "name":"MJinbe Wash Bandung",
+            "address": "Jalan Manggis 5 no.25 Bandung",
+            "phone": "08454554858",
+            "image": "/loc5.jpg"
+        },
+        {
+            "id":2,
+            "name":"Jinbe Wash Jakarta",
+            "address": "Jalan Sawi 2 no.17 BSD",
+            "phone": "0845589641",
+            "image": "/loc2.jpg"
+        },
+        {
+            "id":3,
+            "name":"Jinbe Wash Bogor",
+            "address": "Jalan Mangga 3 no.15 Bogor",
+            "phone": "01848354858",
+            "image": "/loc3.jpeg"
+        },
+        {
+            "id":4,
+            "name":"Jinbe Wash Pamulang",
+            "address": "Jalan Jeruk 4 no.5 Pamulang",
+            "phone": "018485455455",
+            "image": "/loc4.jpeg"
+        },
+        {
+            "id":3,
+            "name":"MJinbe Wash Bandung",
+            "address": "Jalan Manggis 5 no.25 Bandung",
+            "phone": "08454554858",
+            "image": "/loc5.jpg"
+        }
+     
+    ]
+}
