@@ -8,8 +8,10 @@ import { postUseMutation } from "@/features/postUseMutation";
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "@/utils/axiosInstance"
 import { setCookies } from "@/utils/cookies";
+import { useRouter } from "next/navigation";
 
 export default function LoginAdmin() {
+    const router = useRouter()
     const { mutate } = useMutation({
         mutationKey: [`loginAdmin`],
         mutationFn: async (values: any) => {
@@ -19,6 +21,7 @@ export default function LoginAdmin() {
         onSuccess: (data: any) => {
             setCookies(data.data)
             alert(data.message)
+            router.push("/admin")
         },
         onError: ({ response }: any) => {
             alert(response.data.message)
