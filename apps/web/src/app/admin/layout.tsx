@@ -1,6 +1,7 @@
 import AdminAuthProvider from '@/providers/adminAuthProvider';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import SidebarAdmin from '@/components/cores/SidebarAdmin';
 import "../globals.css"
 
 const inter = Inter({ subsets: ['latin'] });
@@ -15,7 +16,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <html lang="en">
             <body className={inter.className}>
                 <AdminAuthProvider>
-                    {children}
+                    <SidebarAdmin />
                 </AdminAuthProvider>
             </body>
         </html>
