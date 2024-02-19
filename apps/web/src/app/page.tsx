@@ -56,8 +56,8 @@ export default function Home() {
     loadMidtransScript()
   }, []);
 
-  if (isLoading) return (<p>Loading...</p>)
-  if (isError) return (<p>Something Error, Please Refresh...</p>)
+  // if (isLoading) return (<p>Loading...</p>)
+  // if (isError) return (<p>Something Error, Please Refresh...</p>)
   return (
   <>
       <Hero/>
