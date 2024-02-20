@@ -2,7 +2,7 @@ import { FcGoogle } from "react-icons/fc";
 export default function Login() {
     return (
         <>
-            <section className="realtive w-full h-full bg-zinc-900/90">
+            <section className="relative w-full h-full bg-zinc-900/90">
             <img className="absolute w-full h-full object-cover mix-blend-overlay " src="https://images.unsplash.com/photo-1585499583264-491df5142e83?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 relative">
                     <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">     
