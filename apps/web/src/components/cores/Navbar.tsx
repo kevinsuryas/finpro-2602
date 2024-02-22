@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import SignInButton from '@/components/navbar/SignInButton'
 export default function Navbar() {
     return (
         <>
@@ -19,7 +20,7 @@ export default function Navbar() {
                             <li><a>Contact Us</a></li>
                         </ul>
                     </div>
-                    <Link href="/"> <Image className='w-[25rem] ml-10' src='/Logo.png' alt='image' width={1000} height={1000} /></Link>
+                    <Link href="/"> <Image className='w-[25rem] ml-10' src='/Logo.png' alt='image' width={1000} height={1000} priority={false} /></Link>
                 </div>
                 {/* Web Navbar */}
                 <div className="navbar-center hidden lg:flex">
@@ -36,8 +37,7 @@ export default function Navbar() {
                     </ul>
                 </div>
                 <div className="navbar-end gap-5 mr-10">
-                    <Link href="/login" className="btn btn-primary text-white font-bold w-[5rem]">Login</Link>
-                    <Link href="/register" className="btn btn-primary text-white font-bold w-[7rem]">Register</Link>
+                    <SignInButton />
                 </div>
             </div>
         </>

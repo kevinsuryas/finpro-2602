@@ -5,6 +5,6 @@ import UserRouter from "./user.router"
 const router = Router()
 router.use("*/image", express.static("public/image"))
 router.use("/api/admin", AdminRouter)
-router.use('/user', UserRouter)
+router.use('/api/user', UserRouter)
 
 export default router

@@ -7,6 +7,9 @@ const router = Router()
 import * as userController from '../controllers/user.controller';
 
 router.post('/register', userController.register)
+router.post('/verification', userController.verification)
+router.post('/login', userController.login)
+
 
 
 export default router
