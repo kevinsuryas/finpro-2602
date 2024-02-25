@@ -7,4 +7,5 @@ router.use("*/image", express.static("public/image"))
 router.use("/api/admin", AdminRouter)
 router.use('/api/user', UserRouter)
 
+
 export default router

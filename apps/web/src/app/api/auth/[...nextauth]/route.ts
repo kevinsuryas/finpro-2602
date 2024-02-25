@@ -1,6 +1,10 @@
+import { axiosInstance } from "@/utils/axiosInstance";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
 import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
+
+const prisma = new PrismaClient
 
 export const authOption: AuthOptions = {
     providers: [
@@ -21,10 +25,14 @@ export const authOption: AuthOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) token.role = user.role
+            // console.log(token)
+            await axiosInstance.post('/user/validateGoogle', token)
             return token
         },
         async session({ session, token }) {
             if (session?.user) session.user.role = token.role
+            
+            
             return session
         }
     },

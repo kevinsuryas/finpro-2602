@@ -3,7 +3,9 @@ import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 const SigninButton = () => {
+
   const { data: session }:any = useSession();
 
   if (session && session.user) {
@@ -23,6 +25,7 @@ const SigninButton = () => {
       </div>
     );
   }
+
   return (
     <>
     <Link href="/login" className="btn btn-primary text-white font-bold w-[5rem]">Login</Link>

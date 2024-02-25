@@ -9,16 +9,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import toast, {Toaster} from 'react-hot-toast'
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation'
+import { registerSchema } from '@/features/schemas/user/yupSchema'
 
 export default function Register () {
-
-    const registerSchema = Yup.object().shape({
-        email: Yup.string()
-            .email('Invalid Email Address')
-            .required('Email is Required')
-    })
-    
    
+    const router = useRouter()
+
     const {mutate} = useMutation({
         mutationFn: async({email}:any) => {
             const response = await axios.post('http://localhost:8000/api/user/register', {
@@ -26,18 +23,21 @@ export default function Register () {
             }) 
             return response.data
         },
-        onSuccess: ({data}) => {
-           alert(data.message)
+        onSuccess: (data) => {
+            toast.success(data.message) 
+            setTimeout(() => {
+               router.push('/register/sending')
+           }, 1000);
         },
         onError: (error) => {
-            console.log(error)
-            alert('Error')        
+            toast.error(error.message)        
         }
     })
     
     return(
-        <section className="relative w-full h-full bg-zinc-900/90">
-        <Image className="absolute w-full h-full object-cover mix-blend-overlay " src="https://images.unsplash.com/photo-1585499583264-491df5142e83?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" width={1920} height={1080} />
+        <section className="relative w-full h-full bg-zinc-700/70">
+        <Toaster/>
+        <Image className="absolute w-full h-full object-cover mix-blend-overlay " src="https://images.unsplash.com/photo-1483401757487-2ced3fa77952?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" width={1920} height={1080} />
                 <Formik
                     initialValues={{email: ''}}
                     validationSchema={registerSchema}
@@ -85,14 +85,14 @@ export default function Register () {
                     <p className="text-sm font-light text-gray-500 dark:text-black">
                         Already have an account? <Link href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
                     </p>
-                    <div className="flex justify-center">
-                        <button onClick={() => signIn('google')} className="flex justify-center text-sm w-full items-center border shadow-lg hover:shadow-xl px-6 py-2 relative bg-white rounded-lg hover:bg-gray-100 cursor-pointer"><FcGoogle className="flex items-center mr-2 w-6 h-6"/> Login With Google</button>
-                    </div>
                 </div>
+                    <div className="flex justify-center">
+                        <p onClick={() => signIn('google')} className="flex justify-center text-sm w-full items-center border shadow-lg hover:shadow-xl px-6 py-2 relative bg-white rounded-lg hover:bg-gray-100 cursor-pointer"><FcGoogle className="flex items-center mr-2 w-6 h-6"/> Login With Google</p>
+                    </div>
             </div>
         </div>
     </div>
-        </Form>
+    </Form>
     </Formik>
 </section>
     )

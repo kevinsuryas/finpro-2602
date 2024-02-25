@@ -2,27 +2,16 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { Field, Form, Formik, ErrorMessage } from 'formik'
-import *as Yup from 'yup'
-import { FcGoogle } from 'react-icons/fc'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
+import toast, { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
+import { verificationSchema } from '@/features/schemas/user/yupSchema'
 export default function Verification() {
 
     const {token: accessToken} = useParams()
+    const router = useRouter()
 
-    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-    const registerSchema = Yup.object().shape({
-
-        phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
-        name: Yup.string()
-            .min(6, 'name Must be 6 Characters')
-            .required('name is Required'), 
-        password: Yup.string()
-            .min(6, 'Password Must be 6 Characters')
-            .max(12, 'Password Maximum 12 Characters')
-            .required('Password is Required')
-    })
-   
     const {mutate} = useMutation({
         mutationFn: async({name, phoneNumber, password }: any) => {
             const response = await axios.post('http://localhost:8000/api/user/verification', {
@@ -30,23 +19,27 @@ export default function Verification() {
             }) 
             return response.data
         },
-        onSuccess: () => {
-           alert('Verification Success')
+        onSuccess: (data) => {
+            toast.success(data.message)
+            setTimeout(() => {           
+                router.push('/')
+            }, 1500);
         },
         onError: (error) => {
             console.log(error)
-            alert('Error')   
+            toast.error('Error')   
         }
     })
 
     return (
         <section className="relative w-full h-full bg-zinc-900/90">
+            <Toaster/>
         <Image className='absolute w-full h-full object-cover mix-blend-overlay' src="https://images.unsplash.com/photo-1578070181910-f1e514afdd08?q=80&w=1866&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="/" width={1920} height={1080} />
 
                 <Formik
                     initialValues={{name: '', phoneNumber: '', password: ''}}
-                    validationSchema={registerSchema}
+                    validationSchema={verificationSchema}
                     onSubmit={async(values) => {
                         const {name, phoneNumber, password} = values 
                         await mutate({name, phoneNumber, password})

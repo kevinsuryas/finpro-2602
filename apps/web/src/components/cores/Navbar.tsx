@@ -4,7 +4,7 @@ import SignInButton from '@/components/navbar/SignInButton'
 export default function Navbar() {
     return (
         <>
-            <div className="navbar bg-neutral h-[8rem] z-[12] sticky top-0 ">
+            <div className="navbar bg-neutral h-[6rem] z-[12] sticky top-0 ">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -20,7 +20,7 @@ export default function Navbar() {
                             <li><a>Contact Us</a></li>
                         </ul>
                     </div>
-                    <Link href="/"> <Image className='w-[25rem] ml-10' src='/Logo.png' alt='image' width={1000} height={1000} priority={false} /></Link>
+                    <Link href="/"> <Image className='w-[18rem] ml-20 mt-2' src='/Logo.png' alt='image' width={1000} height={1000} priority={false} /></Link>
                 </div>
                 {/* Web Navbar */}
                 <div className="navbar-center hidden lg:flex">
