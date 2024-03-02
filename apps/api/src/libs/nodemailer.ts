@@ -16,10 +16,24 @@ export const transporterMailer = nodemailer.createTransport({
 
 // export const verifyAccount = async (email: string) => {
 
+
+    const verifyToken = await jwtCreate({ id: "testid", role: "customer" })
+    const template = fs.readFileSync("./VerifyEmailTemplate.html", "utf-8")
+    let compiledTemplate: any = await Handlebars.compile(template)
+    compiledTemplate = compiledTemplate({ email: "testid@gmail.com", verifyToken })
+}
+    await transporterMailer.sendMail({
+        from: "Jinbe Wash",
+        to: email,
+        subject: "Welcome",
+        html: compiledTemplate
+    })
+
 //     const verifyToken = await jwtCreate({ id: "testid", role: "customer", email })
 //     const template = fs.readFileSync("./VerifyEmailTemplate.html", "utf-8")
 //     let compiledTemplate: any = await Handlebars.compile(template)
 //     compiledTemplate = compiledTemplate({ email: "testid@gmail.com", verifyToken })
+
 
 //     await transporterMailer.sendMail({
 //         from: "Jinbe Wash",
@@ -27,4 +41,37 @@ export const transporterMailer = nodemailer.createTransport({
 //         subject: "Welcome",
 //         html: compiledTemplate
 //     })
+
 // }
+
+export const registerAccountMailer = async (email: string, token:any) => {
+    const template = fs.readFileSync('src/libs/VerifyEmailTemplate.html','utf-8',);
+
+    let compiledTemplate: any = await Handlebars.compile(template);
+    compiledTemplate = compiledTemplate({ email, verifyToken: token });
+
+    await transporterMailer.sendMail({
+      from: 'jjanistech@gmail.com',
+      to: email,
+      subject: 'Welcome!',
+      html: compiledTemplate,
+    });
+   
+}
+
+export const forgetPasswordMailer = async (email: string, token:any) => {
+    const template = fs.readFileSync('src/libs/ResetPasswordTemplate.html','utf-8', );
+    let compiledTemplate: any = await Handlebars.compile(template);
+    compiledTemplate = compiledTemplate({ email, resetToken: token });
+
+    await transporterMailer.sendMail({
+      from: 'jjanistech@gmail.com',
+      to: email,
+      subject: 'Reset Your Password!',
+      html: compiledTemplate,
+    });
+
+}
+
+// }
+

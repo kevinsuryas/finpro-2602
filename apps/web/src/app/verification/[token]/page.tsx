@@ -1,5 +1,8 @@
 'use client'
+
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMutation } from '@tanstack/react-query'
+
 import axios from 'axios'
 import { Field, Form, Formik, ErrorMessage } from 'formik'
 import Image from 'next/image'
@@ -7,11 +10,30 @@ import { useParams } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { verificationSchema } from '@/features/schemas/user/yupSchema'
+
+import { axiosInstance } from '@/utils/axiosInstance'
+
+
 export default function Verification() {
 
     const {token: accessToken} = useParams()
     const router = useRouter()
 
+
+    // const {isError, isLoading} = useQuery({
+    //     queryKey: ['validateUser'],
+    //     queryFn: async() => {
+    //         const response = await axiosInstance.post('/user/verification/validate', {
+    //             accessToken
+    //         })
+    //         return response.data
+    //     }
+    // })
+    
+    const {mutate} = useMutation({
+        mutationFn: async({name, phoneNumber, password }: any) => {
+            const response = await axiosInstance.post('/user/verification', {
+                name, phoneNumber, password, accessToken
     const {mutate} = useMutation({
         mutationFn: async({name, phoneNumber, password }: any) => {
             const response = await axios.post('http://localhost:8000/api/user/verification', {
@@ -25,6 +47,14 @@ export default function Verification() {
                 router.push('/')
             }, 1500);
         },
+        onError: ({response}:any) => {
+            toast.error(response.data.message)   
+        }
+    })
+
+    // if(isLoading) return <p>Loading...</p>
+    // if(isError) return <div>Not Found</div>
+
         onError: (error) => {
             console.log(error)
             toast.error('Error')   

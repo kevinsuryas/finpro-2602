@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { Field, Form, Formik, ErrorMessage } from 'formik'
 import *as Yup from 'yup'
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -14,15 +15,14 @@ import { setUser } from "@/stores/slice/userSlice";
 import { useDispatch } from "react-redux";
 import { setCookies } from "@/features/cookies";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { loginSchema } from "@/features/schemas/admin/yupSchema";
+import { loginSchema } from "@/features/schemas/user/yupSchema";
+
 
 export default function Login() {
     const router = useRouter()
 
-   
   // 1.2. Define useDispatch
   const dispatch = useDispatch()
-
   const route = useRouter()
 
   const {mutate} = useMutation({
