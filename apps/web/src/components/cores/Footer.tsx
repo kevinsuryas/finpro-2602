@@ -3,7 +3,7 @@ export default function Footer () {
     
     return(
     <>
-    <footer className="footer p-10 bg-secondary text-base-content">
+    <footer className="footer p-10 bg-secondary text-base-content relative">
         <aside className="px-10">
             <Image className="w-64" src='/Logo.png' alt='image' width={1000} height={1000} priority/>
             <p>© 2024 Jinbe Wash All rights reserved.</p>

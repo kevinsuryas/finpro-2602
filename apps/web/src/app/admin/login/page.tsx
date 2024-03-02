@@ -7,13 +7,24 @@ import SubmitFormikButton from "@/components/cores/formik/SubmitFormikButton";
 import { postUseMutation } from "@/features/postUseMutation";
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "@/utils/axiosInstance"
+import { setCookies } from "@/utils/cookies";
+import { useRouter } from "next/navigation";
 
 export default function LoginAdmin() {
+    const router = useRouter()
     const { mutate } = useMutation({
         mutationKey: [`loginAdmin`],
         mutationFn: async (values: any) => {
             const res = await axiosInstance.post("/admin/login", values)
             return res.data
+        },
+        onSuccess: (data: any) => {
+            setCookies(data.data)
+            alert(data.message)
+            router.push("/admin")
+        },
+        onError: ({ response }: any) => {
+            alert(response.data.message)
         }
     })
 
@@ -27,7 +38,7 @@ export default function LoginAdmin() {
                             <div>
                                 <Field name="username">
                                     {({ field }: any) => (
-                                        <InputBox field={field} label="Username Address" type="text" placeholder="Input Username" />
+                                        <InputBox field={field} label="Username" type="text" placeholder="Input Username" />
                                     )}
                                 </Field>
                                 <ErrorMessage name="username" />

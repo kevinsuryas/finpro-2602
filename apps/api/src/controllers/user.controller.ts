@@ -12,14 +12,21 @@ import { registerAccountMailer, forgetPasswordMailer} from '@/libs/nodemailer';
 import { transporterMailer } from '@/libs/nodemailer';
 
 export const register = async (req: Request, res: Response,next: NextFunction,): Promise<void> => {
+import { transporterMailer } from '@/libs/nodemailer';
+
+export const register = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const { email } = req.body;
 
     if (!email)
       throw { error: true, message: 'Email must be filled', data: null };
 
-     // Create the new user
-     const createUser = await prisma.customer.create({
+    // Create the new user
+    const createUser = await prisma.customer.create({
       data: {
         email,
         verified: 0,
@@ -73,7 +80,11 @@ export const register = async (req: Request, res: Response,next: NextFunction,):
   }
 };
 
-export const verification = async (req: Request,res: Response,next: NextFunction,): Promise<void> => {
+export const verification = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => (
   try {
     const { accessToken, name, phoneNumber, password } = req.body;
     if (!accessToken) {
@@ -83,7 +94,7 @@ export const verification = async (req: Request,res: Response,next: NextFunction
         data: null,
       };
     }
-    const decodedToken: any = await jwtVerify(accessToken);
+    const decodedToken: any = await jwtVerify(accessToken)
 
     // Check if the user is already verified
 
@@ -102,6 +113,7 @@ export const verification = async (req: Request,res: Response,next: NextFunction
     // Verify the user
     await updateVerified (decodedToken.id, name, phoneNumber, password);
 
+
     res.status(201).send({
       error: false,
       message: 'Verification Success',
@@ -115,9 +127,14 @@ export const verification = async (req: Request,res: Response,next: NextFunction
   }
 };
 
-export const login = async (req: Request, res: Response,next: NextFunction ): Promise<void> => {
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const { email, password } = req.body;
+
     const users: any = await prisma.customer.findFirst({
       where: {
         email,
@@ -140,6 +157,7 @@ export const login = async (req: Request, res: Response,next: NextFunction ): Pr
     }
 
     await updateLogin (users.id, accessToken)
+
     const refreshToken = await refreshTokenJwt({
       id: users.id,
       role: 'customer',
@@ -155,19 +173,54 @@ export const login = async (req: Request, res: Response,next: NextFunction ): Pr
         refreshToken,
       },
     });
- 
+    
   } catch (error: any) {
     next({
       ...error,
       status: 400,
     });
   }
+
 }
 
 export const forgetPassword = async (req: Request,res: Response,next: NextFunction,): Promise<void> => {
   try {
     const { email } = req.body;
     const user = await findEmail(email);
+=======
+};
+
+export const validateGoogle = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const { email, name, picture } = req.body;
+    console.log(req.body);
+
+    if (!email || !name || !picture) {
+      throw { error: true, message: 'Email must be filled', data: null };
+    }
+  }
+  catch (error: any) {
+    
+  }
+}
+export const forgetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const { email } = req.body;
+
+    const user: any = await prisma.customer.findFirst({
+      where: {
+        email,
+      },
+    });
+    
     if (!user) throw { error: false, message: 'Email not Found', data: null };
 
     const token: any = await jwtCreate({
@@ -176,7 +229,23 @@ export const forgetPassword = async (req: Request,res: Response,next: NextFuncti
       email,
     });
 
+
     await forgetPasswordMailer(email, token);
+    const template = fs.readFileSync(
+      'src/libs/ResetPasswordTemplate.html',
+      'utf-8',
+    );
+
+    let compiledTemplate: any = await Handlebars.compile(template);
+    compiledTemplate = compiledTemplate({ email, resetToken: token });
+
+    await transporterMailer.sendMail({
+      from: 'jjanistech@gmail.com',
+      to: email,
+      subject: 'Reset Your Password!',
+      html: compiledTemplate,
+    });
+
 
     res.status(200).send({
       error: false,
@@ -191,7 +260,16 @@ export const forgetPassword = async (req: Request,res: Response,next: NextFuncti
   }
 };
 
+
 export const resetPassword = async (req: Request,res: Response,next: NextFunction,): Promise<void> => {
+// Import necessary modules and dependencies
+
+export const resetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+
   try {
     const { password, token } = req.body;
 
@@ -217,7 +295,18 @@ export const resetPassword = async (req: Request,res: Response,next: NextFunctio
       };
 
     const decodedtoken: any = await jwtVerify(token);
+
     await updateTokenPassword (decodedtoken.id, password)
+
+
+    await prisma.customer.update({
+      where: {
+        id: decodedtoken.id,
+      },
+      data: {
+        password: await hashPassword(password),
+      },
+    });
 
     // update, login, register berhubungan input ke data base pake 201
     res.status(201).send({
@@ -320,3 +409,5 @@ next({
 });
 }
 };
+=======
+

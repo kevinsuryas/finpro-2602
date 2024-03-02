@@ -5,11 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-const SigninButton = () => {
+        
+export const SigninButton = () => {
 
   const { data: session }:any = useSession();
   const dataUser = useSelector((state:any) => state.user)
   // console.log(dataUser)
+
 
   if (session && session.user) {
     return (

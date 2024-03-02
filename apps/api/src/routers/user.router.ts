@@ -5,6 +5,7 @@ verificationUserValidator, handleValidator,} from '@/middlewares/expressValidato
 // Define Variable
 const router = Router();
 
+
 // Import user Controller
 import * as userController from '../controllers/user.controller';
 
@@ -18,3 +19,4 @@ router.post('/verification/validate', userController.verificationValidateToken,)
 
 export default router;
  
+

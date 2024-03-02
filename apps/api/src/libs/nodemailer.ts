@@ -14,28 +14,34 @@ export const transporterMailer = nodemailer.createTransport({
     }
 })
 
-export const verifyAccount = async (email: string) => {
+// export const verifyAccount = async (email: string) => {
+
 
     const verifyToken = await jwtCreate({ id: "testid", role: "customer" })
     const template = fs.readFileSync("./VerifyEmailTemplate.html", "utf-8")
     let compiledTemplate: any = await Handlebars.compile(template)
     compiledTemplate = compiledTemplate({ email: "testid@gmail.com", verifyToken })
 }
-
-<<<<<<< Updated upstream
     await transporterMailer.sendMail({
         from: "Jinbe Wash",
         to: email,
         subject: "Welcome",
         html: compiledTemplate
     })
-=======
+
+//     const verifyToken = await jwtCreate({ id: "testid", role: "customer", email })
+//     const template = fs.readFileSync("./VerifyEmailTemplate.html", "utf-8")
+//     let compiledTemplate: any = await Handlebars.compile(template)
+//     compiledTemplate = compiledTemplate({ email: "testid@gmail.com", verifyToken })
+
+
 //     await transporterMailer.sendMail({
 //         from: "Jinbe Wash",
 //         to: email,
 //         subject: "Welcome",
 //         html: compiledTemplate
 //     })
+
 // }
 
 export const registerAccountMailer = async (email: string, token:any) => {
@@ -66,3 +72,6 @@ export const forgetPasswordMailer = async (email: string, token:any) => {
     });
 
 }
+
+// }
+

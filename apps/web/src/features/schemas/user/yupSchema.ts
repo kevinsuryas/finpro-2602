@@ -6,6 +6,8 @@ import *as Yup from 'yup'
             .email('Invalid Email Address')
             .required('Email is Required'),
     password: Yup.string()
+=======
+            password: Yup.string()
             .min(6, 'Password Must be 6 Characters')
             .max(12, 'Password Maximum 12 Characters')
             .required('Password is Required')

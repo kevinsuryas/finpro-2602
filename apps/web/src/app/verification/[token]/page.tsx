@@ -1,5 +1,8 @@
 'use client'
+
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
+
 import axios from 'axios'
 import { Field, Form, Formik, ErrorMessage } from 'formik'
 import Image from 'next/image'
@@ -7,11 +10,15 @@ import { useParams } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { verificationSchema } from '@/features/schemas/user/yupSchema'
+
 import { axiosInstance } from '@/utils/axiosInstance'
+
+
 export default function Verification() {
 
     const {token: accessToken} = useParams()
     const router = useRouter()
+
 
     // const {isError, isLoading} = useQuery({
     //     queryKey: ['validateUser'],
@@ -27,6 +34,10 @@ export default function Verification() {
         mutationFn: async({name, phoneNumber, password }: any) => {
             const response = await axiosInstance.post('/user/verification', {
                 name, phoneNumber, password, accessToken
+    const {mutate} = useMutation({
+        mutationFn: async({name, phoneNumber, password }: any) => {
+            const response = await axios.post('http://localhost:8000/api/user/verification', {
+               name, phoneNumber, password, accessToken
             }) 
             return response.data
         },
@@ -43,6 +54,12 @@ export default function Verification() {
 
     // if(isLoading) return <p>Loading...</p>
     // if(isError) return <div>Not Found</div>
+
+        onError: (error) => {
+            console.log(error)
+            toast.error('Error')   
+        }
+    })
 
     return (
         <section className="relative w-full h-full bg-zinc-900/90">
