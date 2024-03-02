@@ -9,9 +9,9 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (initialState, action) => {
+            console.log(action.payload)
             initialState.user = {
-                username: action.payload.username,
-                password: action.payload.password,
+                username: action.payload.token,
             }
         }
     }

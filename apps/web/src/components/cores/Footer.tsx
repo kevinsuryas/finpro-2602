@@ -5,7 +5,7 @@ export default function Footer () {
     <>
     <footer className="footer p-10 bg-secondary text-base-content">
         <aside className="px-10">
-            <Image className="w-64" src='/Logo.png' alt='image' width={1000} height={1000}/>
+            <Image className="w-64" src='/Logo.png' alt='image' width={1000} height={1000} priority/>
             <p>© 2024 Jinbe Wash All rights reserved.</p>
         </aside> 
         <nav>

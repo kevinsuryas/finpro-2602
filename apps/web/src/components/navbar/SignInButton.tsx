@@ -1,0 +1,56 @@
+"use client";
+import React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+const SigninButton = () => {
+
+  const { data: session }:any = useSession();
+  const dataUser = useSelector((state:any) => state.user)
+  // console.log(dataUser)
+
+  if (session && session.user) {
+    return (
+      <div className="flex gap-4 ml-auto items-center">
+        <p className="text-sky-600">{session.user.name}</p>
+        <Image
+          src={session.user.image ?? ""}
+          alt={session.user.name ?? ""}
+          className=" rounded-full"
+          width={32}
+          height={32}
+        />
+        <button onClick={() => signOut()} className="text-red-600">
+          Sign Out
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <>
+    {
+      dataUser?.user?.username?
+      <div>
+    <span className="text-2xl"> {dataUser?.user?.username} ABC </span>
+    <button onClick={() => signOut()} className="text-red-600">
+    Sign Out
+  </button>
+      </div>
+    :
+    <div className="flex gap-4 ml-auto items-center">
+      <Link href="/login" className="btn btn-primary text-white font-bold w-[5rem]">Login</Link>
+      <Link href="/register" className="btn btn-primary text-white font-bold w-[7rem]">Register</Link>
+    </div>
+    }
+    
+    {/* <button onClick={() => signIn()} className="text-green-600">
+      Sign In
+    </button> */}
+    </>
+  );
+};
+
+export default SigninButton;

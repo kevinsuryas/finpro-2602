@@ -137,17 +137,21 @@ model Detail_Order {
 }
 
 model Customer {
-  id               String             @id @default(uuid())
-  name             String             @db.VarChar(50)
-  phone_number     String             @db.VarChar(14)
-  email            String?            @unique @db.VarChar(50)
-  password         String?
-  longitude        String             @db.VarChar(10)
-  latitude         String             @db.VarChar(9)
-  active           Int                @db.TinyInt()
-  verified         Int                @db.TinyInt()
-  created_at       DateTime           @default(now())
-  updated_at       DateTime           @updatedAt
+  id            String    @id @default(uuid())
+  name          String?   @db.VarChar(50)
+  phone_number  String?   @db.VarChar(14)
+  email         String?   @unique @db.VarChar(50)
+  password      String?
+  accessToken   String?   @db.LongText
+  emailVerified DateTime?
+  image         String?
+  longitude     String?   @db.VarChar(10)
+  latitude      String?   @db.VarChar(9)
+  active        Int?      @db.TinyInt()
+  verified      Int?      @db.TinyInt()
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
   Customer_Address Customer_Address[]
   Order            Order[]
 }
